@@ -1,6 +1,6 @@
 import pymupdf
 
-file_path = "docs/Yoonus Ahmed CV.pdf"
+file_path = "docs/football_rules.docx"
 
 
 def extract_text_from_pdf(file_path):
