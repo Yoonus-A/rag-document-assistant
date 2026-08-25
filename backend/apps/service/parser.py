@@ -1,6 +1,6 @@
 import pymupdf
 
-file_path = "docs/football_rules.docx"
+
 
 
 def extract_text_from_pdf(file_path):
@@ -21,7 +21,4 @@ def extract_text_from_pdf(file_path):
     return pages
 
 
-extracted_text = extract_text_from_pdf(file_path)
-for page in extracted_text:
-    print(f"--- Page {page['page_number']} ---")
-    print(page["text"])
+
