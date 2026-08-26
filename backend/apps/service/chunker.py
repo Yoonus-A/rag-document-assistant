@@ -1,4 +1,10 @@
 from parser import extract_text_from_pdf
+from sentence_transformers import SentenceTransformer
+
+
+
+model = SentenceTransformer("all-MiniLM-L6-v2")
+
 
 def recursive_chunk_text(text, chunk_size=1000, overlap=200, separators=None):
     if separators is None:
@@ -74,9 +80,11 @@ def chunk_pages(pages, chunk_size, overlap):
 
         for chunk in page_chunks:
             chunks.append({
+                "chunk_id" : len(chunks),
                 "text": chunk,
                 "page_number": page["page_number"]
             })
+
 
     return chunks
 
@@ -92,11 +100,20 @@ chunks = chunk_pages(
     overlap=200
 )
 
+texts = [chunk["text"] for chunk in chunks]
+embeddings = model.encode(texts)
+for chunk, embedding in zip(chunks, embeddings):
+    chunk["embedding"] = embedding.tolist()
+
 print("Number of pages:", len(pages))
 print("Number of chunks:", len(chunks))
 
-for i, chunk in enumerate(chunks):
-    print(f"\nChunk {i + 1}")
+
+for chunk in chunks:
+    print(f"Chunk ID: {chunk['chunk_id']}")
     print(f"Page: {chunk['page_number']}")
+    print(f"Text length: {len(chunk['text'])}")
+    print(f"Text: {chunk['text']}")
+    print(f"Embedding length: {len(chunk['embedding'])}")
+    print(f"5 Embedding: {chunk['embedding'][:5]}")
     print("-" * 50)
-    print(chunk["text"])
