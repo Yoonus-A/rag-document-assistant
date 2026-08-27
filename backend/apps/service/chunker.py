@@ -105,15 +105,3 @@ embeddings = model.encode(texts)
 for chunk, embedding in zip(chunks, embeddings):
     chunk["embedding"] = embedding.tolist()
 
-print("Number of pages:", len(pages))
-print("Number of chunks:", len(chunks))
-
-
-for chunk in chunks:
-    print(f"Chunk ID: {chunk['chunk_id']}")
-    print(f"Page: {chunk['page_number']}")
-    print(f"Text length: {len(chunk['text'])}")
-    print(f"Text: {chunk['text']}")
-    print(f"Embedding length: {len(chunk['embedding'])}")
-    print(f"5 Embedding: {chunk['embedding'][:5]}")
-    print("-" * 50)
