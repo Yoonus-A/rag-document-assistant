@@ -25,10 +25,11 @@ class vectorStore:
 
         return [
             {
-                "chunk_id": results.id[0][i],
-                "text": results.documents[0][i],
-                "page_number": results.metadatas[0][i]["page_number"],
-                "distance": results.distances[0][i]
+                "chunk_id" : results["ids"][0][i],
+                "text" : results["documents"][0][i],
+                "page_number" : results["metadatas"][0][i]["page_number"],
+                "distance" : results["distances"][0][i]
             }
-            for i in range(len(results.id[0]))
+            for i in range(len(results["ids"][0]))
         ]
+
