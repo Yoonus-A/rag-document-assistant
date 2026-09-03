@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Paperclip, Send } from "lucide-react";
+import { FileText } from "lucide-react";
 import "./styles.css";
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
         <div className="welcome">
 
           <div className="welcome-icon">
-            <Paperclip size={32} />
+            <FileText size={32} />
           </div>
 
           <h1>
@@ -49,7 +50,7 @@ function App() {
           </h1>
 
           <p>
-            Ask questions about the uploaded document and get answers based on the content of that cocument.
+            Ask questions about the uploaded document and get answers based on the content of that document.
           </p>
 
         </div>
