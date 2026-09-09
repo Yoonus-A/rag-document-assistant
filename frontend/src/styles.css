@@ -66,17 +66,20 @@ input {
   flex: 1;
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 
   padding: 40px 20px 160px;
+
+  overflow-y: auto;
 }
 
 .welcome {
   text-align: center;
   max-width: 600px;
-}
 
+  margin: auto 0; /* keeps welcome vertically centered when it's the only content */
+}
 .welcome-icon {
   width: 64px;
   height: 64px;
@@ -174,6 +177,50 @@ input {
 
 .icon-button input {
   display: none;
+}
+
+/* Chat window */
+
+.chat-window {
+  width: 100%;
+  max-width: 850px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  padding: 0 4px;
+}
+
+.chat-bubble {
+  max-width: 70%;
+  padding: 12px 16px;
+
+  border-radius: 14px;
+
+  font-size: 15px;
+  line-height: 1.5;
+
+  word-wrap: break-word;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+
+  background: #263c60;
+  color: #dce8fa;
+
+  border-bottom-right-radius: 4px;
+}
+
+.chat-bubble.bot {
+  align-self: flex-start;
+
+  background: #181f2d;
+  color: #e5e9f0;
+
+  border: 1px solid #273247;
+  border-bottom-left-radius: 4px;
 }
 
 

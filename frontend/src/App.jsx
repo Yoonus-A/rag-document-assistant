@@ -2,14 +2,39 @@ import { useState } from "react";
 import { Paperclip, Send } from "lucide-react";
 import { FileText } from "lucide-react";
 import "./styles.css";
+import Axios from "axios";
 
 function App() {
   const [message, setMessage] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!message.trim()) return;
 
-    console.log("Message:", message);
+    setChatHistory((prevHistory) => [
+      ...prevHistory,
+      { role: "user", text: message },
+    ]);
+    const currentMessage = message;
+
+    try {
+      const response = await Axios.post("http://localhost:8000/process_question", {
+        question: currentMessage,
+      });
+      setChatHistory((prevHistory) => [
+        ...prevHistory,
+        { role: "assistant", text: response.data.message },
+      ]);
+    }
+    catch (error) {
+      console.error("Error sending message:", error);
+      setChatHistory((prevHistory) => [
+        ...prevHistory,
+        { role: "assistant", text: "Error processing your question." },
+      ]);
+    }
+
+    
 
     setMessage("");
   };
@@ -38,23 +63,23 @@ function App() {
 
 
       <main className="chat-container">
-
-        <div className="welcome">
-
-          <div className="welcome-icon">
-            <FileText size={32} />
+        {chatHistory.length === 0 ? (
+          <div className="welcome">
+            <div className="welcome-icon">
+              <FileText size={32} />
+            </div>
+            <h1>Documents Assistant</h1>
+            <p>Ask questions about the uploaded document and get answers based on the content of that document.</p>
           </div>
-
-          <h1>
-            Documents Assistant
-          </h1>
-
-          <p>
-            Ask questions about the uploaded document and get answers based on the content of that document.
-          </p>
-
-        </div>
-
+        ) : (
+          <div className="chat-window">
+            {chatHistory.map((msg, index) => (
+              <div key={index} className={`chat-bubble ${msg.role}`}>
+                {msg.text}
+              </div>
+            ))}
+          </div>
+        )}
       </main>
 
 
@@ -101,6 +126,8 @@ function App() {
         </p>
 
       </div>
+
+
 
     </div>
   );
