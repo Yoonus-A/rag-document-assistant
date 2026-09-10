@@ -28,6 +28,16 @@ def handle_question(request: QuestionRequest):
 
     return {"message": "Question processed."}
 
+@app.post("/file_upload")
+async def handle_file_upload(file: bytes = None):
+    if file is None:
+        return {"error": "No file uploaded."}
+
+    # Process the uploaded file (e.g., save it, analyze it, etc.)
+    # For demo purposes, just return the size of the uploaded file.
+    file_size = len(file)
+    return {"message": f"File uploaded successfully. Size: {file_size} bytes."}
+
 
 
 if __name__ == "__main__": 

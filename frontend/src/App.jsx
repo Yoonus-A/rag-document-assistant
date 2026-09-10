@@ -39,12 +39,26 @@ function App() {
     setMessage("");
   };
 
-  const handleFileUpload = (event) => {
+  const handleFileUpload = async (event) => {
     const file = event.target.files[0];
 
     if (!file) return;
+    const formData = new FormData();
+    formData.append("file", file);
+  
+    try {
+      const response = await Axios.post("http://localhost:8000/file_upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("File uploaded successfully:", response.data);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
 
-    console.log("Selected file:", file);
+
+    
   };
 
   return (
