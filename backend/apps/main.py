@@ -20,6 +20,7 @@ uploads_dir = Path(__file__).parent / "uploads"
 uploads_dir.mkdir(parents=True, exist_ok=True)
 origins = [
     "http://localhost:5173",
+    "http://localhost:5174",
 ]
 
 app.add_middleware(

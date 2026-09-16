@@ -1,6 +1,6 @@
-from parser import extract_text_from_pdf
+
 from sentence_transformers import SentenceTransformer
-from vector_store import vectorStore
+
 
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
@@ -92,19 +92,5 @@ def chunk_pages(pages, chunk_size, overlap):
 
 
 
-pages = extract_text_from_pdf("docs/fruit.pdf")
 
-chunks = chunk_pages(
-    pages,
-    chunk_size=1000,
-    overlap=200
-)
-
-texts = [chunk["text"] for chunk in chunks]
-embeddings = model.encode(texts)
-for chunk, embedding in zip(chunks, embeddings):
-    chunk["embedding"] = embedding.tolist()
-
-store = vectorStore()
-store.add_documents(chunks)
 

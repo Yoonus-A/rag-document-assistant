@@ -18,6 +18,7 @@ __pycache__/
 Thumbs.db
 
 # Uploaded documents
+uploads/*
 documents/*
 !documents/.gitkeep
 .tmp
