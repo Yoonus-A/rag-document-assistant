@@ -1,12 +1,15 @@
-import { useState } from "react";
-import { Paperclip, Send } from "lucide-react";
+import { useState , useRef } from "react";
 import { FileText } from "lucide-react";
+import { Send } from "lucide-react";
 import "./styles.css";
 import Axios from "axios";
+import FileUploadButton from "./FileUploadButton";
 
 function App() {
   const [message, setMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
+  const [uploadedFile, setUploadedFile] = useState(null);
+  const fileInputRef = useRef(null);
 
   const handleSend = async () => {
     if (!message.trim()) return;
@@ -53,12 +56,17 @@ function App() {
         },
       });
       console.log("File uploaded successfully:", response.data);
+      setUploadedFile(file);
     } catch (error) {
       console.error("Error uploading file:", error);
     }
+  };
 
-
-    
+  const handleRemoveFile = () => {
+    setUploadedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
   };
 
   return (
@@ -99,19 +107,15 @@ function App() {
 
       <div className="input-area">
 
+        {uploadedFile && (
+          <div className="uploaded-file">
+            <span>{uploadedFile.name}</span>
+            <button onClick={handleRemoveFile}>Remove</button>
+          </div>
+        )}
+
         <div className="input-container">
-
-          <label className="icon-button">
-            <Paperclip size={21} />
-
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx,.txt"
-              onChange={handleFileUpload}
-            />
-          </label>
-
-
+          <FileUploadButton handleFileUpload={handleFileUpload} inputRef={fileInputRef} disabled={!!uploadedFile} />
           <input
             className="message-input"
             type="text"
@@ -123,9 +127,7 @@ function App() {
                 handleSend();
               }
             }}
-          />
-
-
+            />
           <button
             className="send-button"
             onClick={handleSend}

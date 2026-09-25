@@ -1,19 +1,20 @@
-from xml.parsers.expat import model
-
 from fastapi import FastAPI, File, UploadFile
 from pathlib import Path
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn 
 import shutil
+from sentence_transformers import SentenceTransformer
 
 from service.parser import extract_text_from_pdf
 from service.chunker import chunk_pages
 from service.vector_store import vectorStore
+from service.retriever import generate_answer
 
 app = FastAPI()
 
 store = vectorStore()
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # create new dir for uploaded files if it doesn't exist
 uploads_dir = Path(__file__).parent / "uploads"
@@ -36,9 +37,9 @@ class QuestionRequest(BaseModel):
 
 @app.post("/process_question")
 def handle_question(request: QuestionRequest):
-    # feed question to LLM not now
+    result = generate_answer(request.question)
 
-    return {"message": "Question processed."}
+    return {"message": result["answer"]}
 
 @app.post("/file_upload")
 async def handle_file_upload(file: UploadFile = File(...)):
