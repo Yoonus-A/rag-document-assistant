@@ -22,8 +22,9 @@ uploads_dir.mkdir(parents=True, exist_ok=True)
 origins = [
     "http://localhost:5173",
     "http://localhost:5174",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
 ]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -62,8 +63,6 @@ async def handle_file_upload(file: UploadFile = File(...)):
     
     store.add_documents(chunks)
 
-    file_size = len(file)
-    return {"message": f"File uploaded successfully. Size: {file_size} bytes."}
 
 
 

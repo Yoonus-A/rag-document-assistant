@@ -7,7 +7,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   background: #10151f;
-  color: #ffffff;
+  color: #f1efef;
 }
 
 button,
@@ -42,23 +42,23 @@ input {
   font-weight: 600;
   letter-spacing: -0.3px;
 }
-
-.status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  font-size: 14px;
-  color: #9da8ba;
-}
-
-.status-dot {
+/* Status indicator */
+.status-label {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #4ade80;
 }
 
+
+.status-label.active {
+  background: #4ade80; /* green */
+  color: #4ade80; /* green */
+}
+
+.status-label.inactive {
+  background: #e40000; /* red */
+  color: #e40000; /* red */
+}
 
 /* Main chat */
 
@@ -247,6 +247,46 @@ input {
   color: #697589;
 }
 
+/* remove file button */
+.uploaded-file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 8px auto;
+  padding: 6px 10px;
+  background: #1e2530;
+  border: 1px solid #2d3648;
+  border-radius: 8px;
+}
+
+.file-name {
+  font-size: 14px;
+  color: #e5e9f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.remove-file-button {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #f87171;
+  background: transparent;
+  border: 1px solid #f87171;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.remove-file-button:hover {
+  background: #f87171;
+  color: #1e2530;
+}
 
 /* Send button */
 

@@ -78,8 +78,8 @@ function App() {
         </div>
 
         <div className="status">
-          <span className="status-dot"></span>
-          Ready
+          <span className={`status-label ${uploadedFile ? 'active' : 'inactive'}`}></span>
+          {uploadedFile ? 'File Uploaded' : 'No File Uploaded'}
         </div>
       </header>
 
@@ -109,8 +109,8 @@ function App() {
 
         {uploadedFile && (
           <div className="uploaded-file">
-            <span>{uploadedFile.name}</span>
-            <button onClick={handleRemoveFile}>Remove</button>
+            <span className="file-name">{uploadedFile.name}</span>
+            <button className="remove-file-button" onClick={handleRemoveFile}>Remove</button>
           </div>
         )}
 
